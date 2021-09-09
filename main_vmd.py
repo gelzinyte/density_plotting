@@ -1,4 +1,5 @@
 import os
+import time	
 import shutil 
 import subprocess
 import click
@@ -31,10 +32,16 @@ def main():
 		density_fnames = [os.path.join(density_dir, fname) for fname in
 						  os.listdir(density_dir) if 'cube' in fname]
 
-
 		for fname in density_fnames:
 
 			stem = os.path.splitext(os.path.basename(fname))[0]
+			
+			target_fname = stem + '.tga'
+			
+			if os.path.exists(target_fname):
+				continue
+			else:
+				print(f'---making {target_fname}')
 
 			if 'eldens' in fname:
 				isosurface = 0.35
