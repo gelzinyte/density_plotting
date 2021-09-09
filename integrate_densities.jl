@@ -97,11 +97,9 @@ end
 ### go through files and make the plots 
 filenames = [fname for fname in readdir(cubes_dir) if occursin("cube", fname)]
 for filename in filenames
-    filename = "HC33H.triplet_opt.uks_def2-svp_opt.dlpno-ccsd_cc-pvdz.triplet.mdci.spindens.cube" 
     output_filename = replace(filename, ".cube" => ".pdf")
     output_filename = "$(output_dir)/$(output_filename)"
     plot_plot("$(cubes_dir)/$(filename)", output_filename)
-    break
 end
 
 

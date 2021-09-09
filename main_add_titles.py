@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 @click.command()
 @click.option('--vmd_dir', show_default=True,
-              default='/Users/elena/code/carbyne_comulene/vmd_plots')
+              default='/Users/elena/code/carbyne_comulene/combined_plots_per_density')
 @click.option('--pdf_dir', show_default=True,
               default='/Users/elena/code/carbyne_comulene/pdf_plots')
 def main(vmd_dir, pdf_dir):
