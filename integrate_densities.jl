@@ -6,8 +6,13 @@ using ASE
 using JuLIP
 
 
-cubes_dir = "all_200x200x200_densities"
-output_dir = "plots_integrated_densities_with_titles"
+# cubes_dir = "all_200x200x200_densities"
+# output_dir = "plots_integrated_densities_with_titles"
+cubes_dir = "400x_grid"
+output_dir = "400x_grid"
+
+
+
 
 function unflatten(flat_array; shape=(40, 40, 40))
     return permutedims(reshape(flat_array, shape), [3, 2, 1])
@@ -81,7 +86,7 @@ function plot_plot(filename, output_filename, title)
 
     x_vals = convert_axis(origin, axes, dimensions=dens_shape)
     at_pos = [atoms.X[i][1] for i in 1:length(atoms.Z) if atoms.Z[i] == 6]
-    plot(x_vals, integral, label="xy-integrated density", lw=2)
+    plot(x_vals, integral, label="xy-summed density", lw=2, legend=:outerbottom)
     vline!(at_pos, label="Carbon atoms' positions", lw=0.5)
     xlabel!("z coordinate")
 	title!(title, titlefontsize=7)
