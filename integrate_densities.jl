@@ -7,7 +7,7 @@ using JuLIP
 
 
 cubes_dir = "all_200x200x200_densities"
-output_dir = "plots_integrated_densities"
+output_dir = "plots_integrated_densities_with_titles"
 
 function unflatten(flat_array; shape=(40, 40, 40))
     return permutedims(reshape(flat_array, shape), [3, 2, 1])
@@ -73,7 +73,7 @@ function integrate(data; step=40)
     return output
 end
 
-function plot_plot(filename, output_filename)
+function plot_plot(filename, output_filename, title)
 
     title = split(filename, "/")[end]
     origin, axes, atoms, el_density, dens_shape = read_file(filename)
@@ -84,6 +84,7 @@ function plot_plot(filename, output_filename)
     plot(x_vals, integral, label="xy-integrated density", lw=2)
     vline!(at_pos, label="Carbon atoms' positions", lw=0.5)
     xlabel!("z coordinate")
+	title!(title, titlefontsize=7)
     savefig(output_filename)
 end
 
@@ -99,7 +100,9 @@ filenames = [fname for fname in readdir(cubes_dir) if occursin("cube", fname)]
 for filename in filenames
     output_filename = replace(filename, ".cube" => ".pdf")
     output_filename = "$(output_dir)/$(output_filename)"
-    plot_plot("$(cubes_dir)/$(filename)", output_filename)
+	title = replace(filename, ".cube" => "")
+	println(title)
+    plot_plot("$(cubes_dir)/$(filename)", output_filename, title)
 end
 
 
