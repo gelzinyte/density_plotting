@@ -4,13 +4,13 @@ Pkg.activate("./integrate_densities")
 using Plots
 using ASE
 using JuLIP
+using Statistics
 
 
-# cubes_dir = "all_200x200x200_densities"
-# output_dir = "plots_integrated_densities_with_titles"
-cubes_dir = "400x_grid"
-output_dir = "400x_grid"
-
+cubes_dir = "all_200x200x200_densities"
+output_dir = "plots_integrated_densities_with_titles"
+# cubes_dir = "400x_grid"
+# output_dir = "400x_grid"
 
 
 
@@ -23,11 +23,12 @@ end
 Returns points along given coordinate to which the density points correspond 
 """
 function convert_axis(origin, axes; which_axis=1, dimensions=(40, 40, 40))
+    bohr = 0.529177249 # Angstrom 
     range = Array(1:dimensions[which_axis])
     # cannot do shearing 
     scaled = range * axes[which_axis][which_axis]
     shifted = [x + origin[which_axis] - axes[which_axis][which_axis] for x in scaled]
-    return shifted
+    return shifted * bohr
 end
 
 
@@ -69,11 +70,12 @@ end
 """
 sums over slices of arrays
 """
-function integrate(data; step=40)
+function integrate(data, spacing; step=40)
+
     output=zeros(0)
     for idx in 1:step
         slice = data[idx,:,:]
-        append!(output, sum(slice))
+        append!(output, sum(slice)*spacing^2)
     end
     return output
 end
@@ -82,13 +84,18 @@ function plot_plot(filename, output_filename, title)
 
     title = split(filename, "/")[end]
     origin, axes, atoms, el_density, dens_shape = read_file(filename)
-    integral = integrate(el_density, step=dens_shape[1])
 
     x_vals = convert_axis(origin, axes, dimensions=dens_shape)
-    at_pos = [atoms.X[i][1] for i in 1:length(atoms.Z) if atoms.Z[i] == 6]
-    plot(x_vals, integral, label="xy-summed density", lw=2, legend=:outerbottom)
+    spacing=x_vals[2] - x_vals[1]
+    # all_spacing = [x_vals[i+1] - x_vals[i] for i in 1:length(x_vals)-1]
+    # println("Mean: $(mean(all_spacing)), standard deviation: $(std(all_spacing))")
+    integral = integrate(el_density, spacing, step=dens_shape[1])
+
+    at_pos = [atoms.X[i][1]*0.529177249 for i in 1:length(atoms.Z) if atoms.Z[i] == 6]
+    plot(x_vals, integral, label="xy-integrated density", lw=2, legend=:outerbottom)
     vline!(at_pos, label="Carbon atoms' positions", lw=0.5)
-    xlabel!("z coordinate")
+    xlabel!("z coordinate, Å")
+    ylabel!("Density, electrons/Å")
 	title!(title, titlefontsize=7)
     savefig(output_filename)
 end
