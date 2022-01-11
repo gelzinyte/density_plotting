@@ -1,0 +1,11 @@
+Date:  Sun 9 Jan 2022 23:42:08 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  cp ../main_vmd.py .
+Date:  Sun 9 Jan 2022 23:43:03 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  cp ../plot_template_isosurfaces.vmd .
+Date:  Sun 9 Jan 2022 23:45:19 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  cp different_grid_along_different_axes/HC30H.triplet_opt.uks_def2-svp_opt.uks_cc-pvdz.triplet.eldens.200x50x50.cube test_density
+Date:  Sun 9 Jan 2022 23:46:03 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  cp ../plot_template_density_cross_section.vmd .
+Date:  Sun 9 Jan 2022 23:46:16 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  python main_vmd.py
+Date:  Sun 9 Jan 2022 23:48:05 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  cp ../integrate_densities.jl .
+Date:  Mon 10 Jan 2022 00:58:26 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  open integrated_test_density
+Date:  Mon 10 Jan 2022 00:59:23 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  code combine_plots_sideways.py
+Date:  Mon 10 Jan 2022 01:00:07 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  ls vmd_plots_crossection
+Date:  Mon 10 Jan 2022 01:00:28 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  comlog
+Date:  Mon 10 Jan 2022 01:02:03 GMT  Location:  /Users/elena/code/carbyne_comulene/short_example   com:  python add_titles.py -output-dir finished -input-dir combined_plots_per_density
